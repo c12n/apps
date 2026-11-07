@@ -1,0 +1,574 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="description" content="Apps and projects by c12n, with TestFlight and GitHub links." />
+    <link rel="icon" href="data:," />
+    <title>c12n Apps</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: #f2f2f7;
+        --card: #ffffff;
+        --card-border: rgba(0, 0, 0, 0.06);
+        --text: #1d1d1f;
+        --text-secondary: #6e6e73;
+        --pill-bg: #f2f2f7;
+        --pill-text: #3a3a3c;
+        --pill-status-bg: #fff4d6;
+        --pill-status-text: #7a5200;
+        --pill-soon-bg: #e8f4fd;
+        --pill-soon-text: #0b5cad;
+        --btn-primary: #0071e3;
+        --btn-primary-text: #ffffff;
+        --btn-secondary: #1d1d1f;
+        --btn-secondary-text: #ffffff;
+        --chip-bg: #ffffff;
+        --chip-border: rgba(0, 0, 0, 0.1);
+        --chip-active-bg: #1d1d1f;
+        --chip-active-text: #ffffff;
+        --footer-border: rgba(0, 0, 0, 0.08);
+        --shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.05);
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #000000;
+          --card: #1c1c1e;
+          --card-border: rgba(255, 255, 255, 0.08);
+          --text: #f5f5f7;
+          --text-secondary: #a1a1a6;
+          --pill-bg: #2c2c2e;
+          --pill-text: #d1d1d6;
+          --pill-status-bg: #3a2f10;
+          --pill-status-text: #ffd60a;
+          --pill-soon-bg: #10324a;
+          --pill-soon-text: #64b5f6;
+          --btn-secondary: #f5f5f7;
+          --btn-secondary-text: #1d1d1f;
+          --chip-bg: #1c1c1e;
+          --chip-border: rgba(255, 255, 255, 0.14);
+          --chip-active-bg: #f5f5f7;
+          --chip-active-text: #1d1d1f;
+          --footer-border: rgba(255, 255, 255, 0.1);
+          --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.35);
+        }
+      }
+      * { box-sizing: border-box; }
+      html { -webkit-text-size-adjust: 100%; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", "Segoe UI", sans-serif;
+        line-height: 1.45;
+      }
+      a { color: var(--btn-primary); }
+      a:focus-visible, button:focus-visible {
+        outline: 2px solid var(--btn-primary);
+        outline-offset: 2px;
+      }
+      .wrap {
+        max-width: 1020px;
+        margin: 0 auto;
+        padding: 40px 20px 0;
+      }
+
+      /* Hero */
+      .hero { padding: 12px 0 26px; }
+      .hero-top {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .hero-mark {
+        width: 52px;
+        height: 52px;
+        border-radius: 14px;
+        background: #1d1d1f;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 19px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        flex: none;
+      }
+      @media (prefers-color-scheme: dark) {
+        .hero-mark { background: #f5f5f7; color: #1d1d1f; }
+      }
+      h1 {
+        margin: 0;
+        font-size: 34px;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        line-height: 1.1;
+      }
+      .hero-intro {
+        margin: 14px 0 0;
+        font-size: 17px;
+        color: var(--text-secondary);
+        max-width: 560px;
+      }
+      .hero-meta {
+        margin: 12px 0 0;
+        font-size: 13.5px;
+        font-weight: 600;
+        color: var(--text-secondary);
+      }
+
+      /* Filters */
+      .filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 4px 0 20px;
+      }
+      .chip {
+        appearance: none;
+        border: 1px solid var(--chip-border);
+        background: var(--chip-bg);
+        color: var(--text);
+        font: inherit;
+        font-size: 13.5px;
+        font-weight: 600;
+        padding: 7px 14px;
+        border-radius: 999px;
+        cursor: pointer;
+      }
+      .chip[aria-pressed="true"] {
+        background: var(--chip-active-bg);
+        color: var(--chip-active-text);
+        border-color: transparent;
+      }
+
+      /* Grid and cards */
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 16px;
+        padding-bottom: 8px;
+      }
+      @media (min-width: 680px) {
+        .grid { grid-template-columns: 1fr 1fr; }
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--card-border);
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .card[hidden] { display: none; }
+      .card-head {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+      }
+      .tile {
+        width: 56px;
+        height: 56px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: none;
+        color: #ffffff;
+      }
+      .tile svg { width: 30px; height: 30px; display: block; }
+      .tile-alrashid { background: #0e7a5f; }
+      .tile-ferry { background: #0a84ff; }
+      .tile-navi { background: #e8590c; }
+      .tile-retro { background: #48484a; }
+      .tile-s5l { background: #087f8c; }
+      .tile-next { background: #d92b1f; }
+      .tile-tab { background: #b97a06; }
+      .tile-down { background: #0aa2c0; }
+      .card-title {
+        margin: 2px 0 0;
+        font-size: 19px;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        line-height: 1.25;
+      }
+      .card-desc {
+        margin: 0;
+        font-size: 15px;
+        color: var(--text-secondary);
+        flex: 1;
+      }
+      .pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .pill {
+        font-size: 12px;
+        font-weight: 600;
+        padding: 4px 10px;
+        border-radius: 999px;
+        background: var(--pill-bg);
+        color: var(--pill-text);
+        white-space: nowrap;
+      }
+      .pill-status { background: var(--pill-status-bg); color: var(--pill-status-text); }
+      .pill-soon { background: var(--pill-soon-bg); color: var(--pill-soon-text); }
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 2px;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 600;
+        padding: 9px 16px;
+        border-radius: 12px;
+      }
+      .btn svg { width: 16px; height: 16px; flex: none; }
+      .btn-testflight { background: var(--btn-primary); color: var(--btn-primary-text); }
+      .btn-github { background: var(--btn-secondary); color: var(--btn-secondary-text); }
+      .not-published {
+        font-size: 13.5px;
+        font-weight: 600;
+        color: var(--text-secondary);
+        padding: 9px 2px;
+      }
+      .empty-note {
+        display: none;
+        font-size: 15px;
+        color: var(--text-secondary);
+        padding: 12px 2px 20px;
+      }
+      .empty-note.show { display: block; }
+
+      /* Source strip */
+      .source-strip {
+        margin: 26px 0 0;
+        background: var(--card);
+        border: 1px solid var(--card-border);
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+        padding: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 14px;
+      }
+      .source-strip-text { flex: 1; min-width: 220px; }
+      .source-strip-title {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 700;
+      }
+      .source-strip-sub {
+        margin: 4px 0 0;
+        font-size: 13.5px;
+        color: var(--text-secondary);
+        overflow-wrap: break-word;
+      }
+      .source-strip-sub a { overflow-wrap: anywhere; }
+      .btn-copy {
+        appearance: none;
+        border: 1px solid var(--chip-border);
+        background: var(--chip-bg);
+        color: var(--text);
+        font: inherit;
+        font-size: 14px;
+        font-weight: 600;
+        padding: 9px 16px;
+        border-radius: 12px;
+        cursor: pointer;
+      }
+
+      /* Footer */
+      footer {
+        margin-top: 34px;
+        border-top: 1px solid var(--footer-border);
+        padding: 20px 0 34px;
+        font-size: 13.5px;
+        color: var(--text-secondary);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 14px;
+        align-items: center;
+      }
+      footer a { font-weight: 600; text-decoration: none; }
+      footer a:hover { text-decoration: underline; }
+      .foot-sep { opacity: 0.6; }
+
+      @media (max-width: 480px) {
+        .wrap { padding: 28px 16px 0; }
+        h1 { font-size: 29px; }
+        .hero-intro { font-size: 16px; }
+        .card { padding: 18px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="hero">
+        <div class="hero-top">
+          <div class="hero-mark" aria-hidden="true">c12n</div>
+          <h1>c12n Apps</h1>
+        </div>
+        <p class="hero-intro">Apps and experiments by c12n, in one place, with TestFlight and GitHub links where each project is published.</p>
+        <p class="hero-meta">8 projects <span aria-hidden="true">|</span> iOS, Android and Windows <span aria-hidden="true">|</span> TestFlight and GitHub</p>
+      </header>
+
+      <nav class="filters" aria-label="Filter projects by status">
+        <button class="chip" type="button" data-filter="all" aria-pressed="true">All projects</button>
+        <button class="chip" type="button" data-filter="available" aria-pressed="false">Available now</button>
+        <button class="chip" type="button" data-filter="development" aria-pressed="false">In development</button>
+        <button class="chip" type="button" data-filter="soon" aria-pressed="false">Coming soon</button>
+      </nav>
+
+      <main class="grid" id="grid">
+        <!-- 1. AlRashid Prayer -->
+        <article class="card" data-status="available">
+          <div class="card-head">
+            <div class="tile tile-alrashid" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13.5A8.5 8.5 0 1 1 10.5 4a7 7 0 0 0 9.5 9.5z"/><path d="M17.5 3.5l.6 1.7 1.7.6-1.7.6-.6 1.7-.6-1.7-1.7-.6 1.7-.6z" fill="currentColor" stroke="none"/></svg>
+            </div>
+            <h2 class="card-title">AlRashid Prayer</h2>
+          </div>
+          <p class="card-desc">Prayer times, widgets and alerts for AlRashid Mosque in Edmonton</p>
+          <div class="pills">
+            <span class="pill">v2.0.0</span>
+            <span class="pill">iOS</span>
+            <span class="pill">Android</span>
+          </div>
+          <div class="actions">
+            <a class="btn btn-testflight" href="https://testflight.apple.com/join/sZSwT5u1" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>
+              TestFlight
+            </a>
+            <a class="btn btn-github" href="https://github.com/c12n/alrashid-widget" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 1.695.435.39.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+              GitHub
+            </a>
+          </div>
+        </article>
+
+        <!-- 2. Ferry -->
+        <article class="card" data-status="available">
+          <div class="card-head">
+            <div class="tile tile-ferry" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M2.5 9a15 15 0 0 1 19 0"/><path d="M5.5 12.5a10.5 10.5 0 0 1 13 0"/><path d="M8.6 16a6 6 0 0 1 6.8 0"/><circle cx="12" cy="19.4" r="1.3" fill="currentColor" stroke="none"/></svg>
+            </div>
+            <h2 class="card-title">Ferry</h2>
+          </div>
+          <p class="card-desc">Download Ferry on your iPhone, then any device that can install the WireGuard app or use the WireGuard protocol can use your hotspot</p>
+          <div class="pills">
+            <span class="pill">v1.1.1</span>
+            <span class="pill">iOS</span>
+          </div>
+          <div class="actions">
+            <a class="btn btn-github" href="https://github.com/c12n/ferry" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 1.695.435.39.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+              GitHub
+            </a>
+          </div>
+        </article>
+
+        <!-- 3. NaviUpload -->
+        <article class="card" data-status="available">
+          <div class="card-head">
+            <div class="tile tile-navi" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18.5V6l10-2v11.5"/><circle cx="6.5" cy="18.5" r="2.5"/><circle cx="16.5" cy="15.5" r="2.5"/></svg>
+            </div>
+            <h2 class="card-title">NaviUpload</h2>
+          </div>
+          <p class="card-desc">Upload music to a Navidrome library from files or links, with tags, artwork and lyrics filled in automatically</p>
+          <div class="pills">
+            <span class="pill">v0.6.0</span>
+            <span class="pill">iOS</span>
+            <span class="pill">Windows</span>
+          </div>
+          <div class="actions">
+            <a class="btn btn-github" href="https://github.com/c12n/navidrome-uploader" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 1.695.435.39.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+              GitHub
+            </a>
+          </div>
+        </article>
+
+        <!-- 4. RetroPhone -->
+        <article class="card" data-status="available">
+          <div class="card-head">
+            <div class="tile tile-retro" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10.5 5h3"/><circle cx="12" cy="18" r="1.4"/></svg>
+            </div>
+            <h2 class="card-title">RetroPhone</h2>
+          </div>
+          <p class="card-desc">Run classic iPhone OS and iOS 4 era firmware in an emulator</p>
+          <div class="pills">
+            <span class="pill">v0.2.0</span>
+            <span class="pill">iOS</span>
+          </div>
+          <div class="actions">
+            <a class="btn btn-github" href="https://github.com/c12n/retrophone" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 1.695.435.39.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+              GitHub
+            </a>
+          </div>
+        </article>
+
+        <!-- 5. S5LBox -->
+        <article class="card" data-status="available">
+          <div class="card-head">
+            <div class="tile tile-s5l" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><rect x="10" y="10" width="4" height="4" rx="1"/><path d="M9 6V3.5M15 6V3.5M9 20.5V18M15 20.5V18M6 9H3.5M6 15H3.5M20.5 9H18M20.5 15H18"/></svg>
+            </div>
+            <h2 class="card-title">S5LBox</h2>
+          </div>
+          <p class="card-desc">Emulator that boots iOS 4.2.1 all the way to launchd</p>
+          <div class="pills">
+            <span class="pill">iOS</span>
+          </div>
+          <div class="actions">
+            <a class="btn btn-github" href="https://github.com/c12n/S5LBox" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 1.695.435.39.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+              GitHub
+            </a>
+          </div>
+        </article>
+
+        <!-- 6. NextTouch -->
+        <article class="card" data-status="development">
+          <div class="card-head">
+            <div class="tile tile-next" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11.5V5.8a1.8 1.8 0 0 1 3.6 0v4.2l4.9 1.6c.9.3 1.4 1.2 1.2 2.1l-.9 4.1A4 4 0 0 1 13.9 21H12a5 5 0 0 1-4-2L5.4 15a1.8 1.8 0 0 1 2.9-1.9L9 14z"/></svg>
+            </div>
+            <h2 class="card-title">NextTouch</h2>
+          </div>
+          <p class="card-desc">Emulator bringing iOS 8.4.1 on the iPhone 4S to life</p>
+          <div class="pills">
+            <span class="pill">v0.1.0</span>
+            <span class="pill pill-status">In development</span>
+          </div>
+          <div class="actions">
+            <a class="btn btn-github" href="https://github.com/c12n/nexttouch" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 1.695.435.39.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+              GitHub
+            </a>
+          </div>
+        </article>
+
+        <!-- 7. iOS 16 on Galaxy Tab S6 Lite -->
+        <article class="card" data-status="development">
+          <div class="card-head">
+            <div class="tile tile-tab" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="3" width="15" height="18" rx="2.5"/><circle cx="12" cy="17.6" r="1.1"/></svg>
+            </div>
+            <h2 class="card-title">iOS 16 on Galaxy Tab S6 Lite</h2>
+          </div>
+          <p class="card-desc">Porting iOS 16 to a Samsung Galaxy Tab S6 Lite</p>
+          <div class="pills">
+            <span class="pill pill-status">In development</span>
+          </div>
+          <div class="actions">
+            <a class="btn btn-github" href="https://github.com/c12n/ios-gta4xlwifi" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 1.695.435.39.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+              GitHub
+            </a>
+          </div>
+        </article>
+
+        <!-- 8. Downloader -->
+        <article class="card" data-status="soon">
+          <div class="card-head">
+            <div class="tile tile-down" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v10.5"/><path d="M6.5 10.5L12 16l5.5-5.5"/><path d="M4.5 20h15"/></svg>
+            </div>
+            <h2 class="card-title">Downloader</h2>
+          </div>
+          <p class="card-desc">A download manager for iPhone with parallel connections, pause and resume, and live speed and time remaining</p>
+          <div class="pills">
+            <span class="pill">v1.0.0</span>
+            <span class="pill">iOS</span>
+            <span class="pill pill-soon">Coming soon</span>
+          </div>
+          <div class="actions">
+            <span class="not-published">Not published yet</span>
+          </div>
+        </article>
+      </main>
+
+      <p class="empty-note" id="emptyNote">No projects match this filter.</p>
+
+      <section class="source-strip" aria-label="Feather and AltStore source">
+        <div class="source-strip-text">
+          <p class="source-strip-title">Get the apps in Feather or AltStore</p>
+          <p class="source-strip-sub">Add this source to get the sideload releases in one feed: <a href="https://c12nfeather.07051969.xyz/source.json" target="_blank" rel="noopener">c12nfeather.07051969.xyz/source.json</a></p>
+        </div>
+        <button class="btn-copy" type="button" id="copySource">Copy source link</button>
+      </section>
+
+      <footer>
+        <span>Copyright (c) 2026 c12n Apps</span>
+        <span class="foot-sep" aria-hidden="true">|</span>
+        <a href="https://github.com/c12n" target="_blank" rel="noopener">github.com/c12n</a>
+        <span class="foot-sep" aria-hidden="true">|</span>
+        <a href="https://c12nfeather.07051969.xyz/source.json" target="_blank" rel="noopener">Feather and AltStore source</a>
+      </footer>
+    </div>
+
+    <script>
+      (function () {
+        var chips = Array.prototype.slice.call(document.querySelectorAll(".chip"));
+        var cards = Array.prototype.slice.call(document.querySelectorAll(".card"));
+        var emptyNote = document.getElementById("emptyNote");
+
+        chips.forEach(function (chip) {
+          chip.addEventListener("click", function () {
+            var filter = chip.getAttribute("data-filter");
+            chips.forEach(function (c) {
+              c.setAttribute("aria-pressed", c === chip ? "true" : "false");
+            });
+            var visible = 0;
+            cards.forEach(function (card) {
+              var show = filter === "all" || card.getAttribute("data-status") === filter;
+              card.hidden = !show;
+              if (show) visible++;
+            });
+            emptyNote.classList.toggle("show", visible === 0);
+          });
+        });
+
+        var copyBtn = document.getElementById("copySource");
+        var sourceUrl = "https://c12nfeather.07051969.xyz/source.json";
+        copyBtn.addEventListener("click", function () {
+          function done() {
+            copyBtn.textContent = "Copied";
+            setTimeout(function () { copyBtn.textContent = "Copy source link"; }, 2000);
+          }
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(sourceUrl).then(done, function () {
+              copyBtn.textContent = "Copy failed, use the link above";
+            });
+          } else {
+            var ta = document.createElement("textarea");
+            ta.value = sourceUrl;
+            ta.style.position = "fixed";
+            ta.style.opacity = "0";
+            document.body.appendChild(ta);
+            ta.select();
+            try { document.execCommand("copy"); done(); }
+            catch (e) { copyBtn.textContent = "Copy failed, use the link above"; }
+            document.body.removeChild(ta);
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>
